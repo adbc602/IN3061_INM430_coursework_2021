@@ -1,0 +1,75 @@
+
+#Q1 Parse Excel to Pandas dataframe
+
+import pandas as pd
+data= pd.read_csv("passengerData.csv")
+data.head()
+data1= pd.read_excel("ticketPrices (1).xlsx")
+data1.head()
+
+#Q2  Merge the two Csv
+df_merged = pd.merge(data, data1,on='TicketType', how='inner')
+df_merged
+
+#Q3 Older Persons Names
+df_new= df_merged.copy()
+df_new= df_new.sort_values(by='Age', ascending= False).reset_index(drop= True)
+df_new['Name'][:5]
+
+#4 Scatter plot between Age VS Ticket Price
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.scatter(x= df_new['Age'], y= df_new['Fare'])
+plt.title("Scatter Plot Between Age and Ticket Price")
+plt.xlabel("Age")
+plt.ylabel("Fare")
+plt.show()
+
+# Q5 Plot only the data that shows female passengers aged 40 to 50 and who paid more than or equal to 40.
+
+df_female= df_merged[df_merged['Sex']== "female"]
+df_fem_age= df_female[(df_female["Age"]>=40) & (df_female["Age"]<=50)]
+df_fem_age_fare= df_fem_age[df_fem_age['Fare']>= 40].reset_index(drop=True)
+
+df_fem_age_fare
+
+# TASK 2
+
+#1 Load the slightly modified Titanic survival data into a pandas data frame
+
+data= pd.read_csv("titanicSurvival_m.csv")
+df=data.copy()
+df.head()
+
+#2. Find the counts of missing values in each column
+
+df.isna().sum()
+
+#3. Compute the mean and other descriptive statistics and note these down, you can use this function
+
+df.describe(include='all')
+
+#Q4 Replace the missing values in "Age" and "Fare" columns with 0 values, and visualise in a scatterplot
+df['Age']= df['Age'].fillna(0)
+df['Fare']= df['Fare'].fillna(0)
+plt.scatter(x= df['Age'], y= df['Fare'])
+plt.title("Scatter Plot Between Age and Ticket Price")
+plt.xlabel("Age")
+plt.ylabel("Fare")
+plt.show()
+
+#Q5 Replace the missing values in "Age" and "Fare" columns with the mean of each column, and visualise in a scatterplot
+df1= data.copy()
+df1['Age']= df1['Age'].fillna(df1['Age'].mean())
+df1['Fare']= df1['Fare'].fillna(df1['Fare'].mean())
+plt.scatter(x= df['Age'], y= df['Fare'])
+plt.title("Scatter Plot Between Age and Ticket Price")
+plt.xlabel("Age")
+plt.ylabel("Fare")
+plt.show()
+
+
+# #Q6.  Reflect on the differences you see in these plots.
+# In Q4, we fill the null values in age and fare column with 0, So it can be seen in the scatter plot that the data is left skewed towards the 0, and in the Q5, the null values in age and fare are filled by the Mean of each column, so the data is equally distiributed at the mean of the mean value and not skewed towards 0.
+
