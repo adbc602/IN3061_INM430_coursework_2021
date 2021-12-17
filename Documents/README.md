@@ -6,8 +6,8 @@ id: Principles of Data Science
 
 _Important: Please Add you name and City email address below and stage/commit/push to your Github repo._
 
-## Name:
+## Name: Andrea Cortes
 
-## City Email:
+## City Email: andrea.cortes@city.ac.uk
 
 ---
